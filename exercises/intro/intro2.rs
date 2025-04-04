@@ -7,5 +7,5 @@
 
 
 fn main() {
-    println!("fuck your mother!");
+    println!("hello world!");
 }
