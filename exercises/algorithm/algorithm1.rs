@@ -2,7 +2,6 @@
 	single linked list merge
 	This problem requires you to merge two ordered singly linked lists into one ordered singly linked list
 */
-// I AM NOT DONE
 
 use std::fmt::{self, Display, Formatter};
 use std::ptr::NonNull;
@@ -24,7 +23,7 @@ impl<T> Node<T> {
 }
 #[derive(Debug)]
 struct LinkedList<T> {
-    length: u32,
+    length: i32,
     start: Option<NonNull<Node<T>>>,
     end: Option<NonNull<Node<T>>>,
 }
@@ -69,14 +68,38 @@ impl<T> LinkedList<T> {
             },
         }
     }
-	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self
-	{
-		//TODO
-		Self {
-            length: 0,
-            start: None,
-            end: None,
+}
+impl<T> LinkedList<T>
+where
+    T:PartialOrd + Copy,
+{
+	pub fn merge( mut list_a:LinkedList<T>,mut list_b:LinkedList<T>) -> Self
+	{   let mut re = Self::new();
+        let mut p_a :i32 = 0;
+        let mut p_b :i32 = 0;
+        while (p_a != list_a.length)||(p_b != list_b.length) {
+            if p_a == list_a.length {
+                for i in p_b..list_b.length{
+                    re.add(*(list_b.get(i).unwrap()));
+                    p_b +=1;
+                }
+            }
+            else if p_b == list_b.length {
+                for i in p_a..list_a.length{
+                    re.add(*(list_a.get(i).unwrap()));
+                    p_a += 1;
+                }
+            }
+            else if *(list_a.get(p_a).unwrap()) < *(list_b.get(p_b).unwrap()) {
+                re.add(*(list_a.get(p_a).unwrap()));
+                p_a +=1;
+            }
+            else{
+                re.add(*(list_b.get(p_b).unwrap()));
+                p_b += 1;
+            }
         }
+        re
 	}
 }
 
