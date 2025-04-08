@@ -48,7 +48,7 @@ pub trait Graph {
 		let table = self.adjacency_table_mutable();
         if table.contains_key(node) {
             false
-        } else {
+        } else { 
             table.insert(node.to_string(), Vec::new());
             true
         }
